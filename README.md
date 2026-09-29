@@ -9,19 +9,25 @@
 | [dsh-web-search-keenable](dsh-web-search-keenable) | `web_search` + `web_fetch` | Keenable `/v1/search`、`/v1/fetch` | 可无密钥（公共端点限流），有 `KEENABLE_API_KEY` 更好 |
 | [dsh-web-search-tinyfish](dsh-web-search-tinyfish) | `web_search` + `web_fetch` | TinyFish `api.search.tinyfish.ai`、`api.fetch.tinyfish.ai` | **必须** `TINYFISH_API_KEY`（[申请地址](https://agent.tinyfish.ai/api-keys)） |
 
-## 通过 GitHub 链接单独安装
+## 安装
 
-仓库里的两个插件**互相独立**，可以只装其中一个，也可以两个都装。安装命令（任选其一执行，也可两条都执行）：
+仓库里的两个插件**互相独立**，可以只装其中一个，也可以两个都装。安装命令（按需执行，也可两条都执行）：
+
+```powershell
+# 只装 Keenable
+dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
+
+# 只装 TinyFish
+dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-tinyfish
+```
+
+`#path:` 后面的子目录决定安装哪一个插件；`github:用户名/仓库名` 也可以写成完整仓库地址 `https://github.com/Liang-Liao/dsh-customize-search`。
+
+在 Harness 会话内（对话中的插件管理工具）则用等价的安装形式：
 
 ```text
 plugin_manager action=install_bundle target=github:Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
 plugin_manager action=install_bundle target=github:Liang-Liao/dsh-customize-search#path:dsh-web-search-tinyfish
-```
-
-`#path:` 后面的子目录决定安装哪一个插件；`github:用户名/仓库名` 也可以写成完整仓库地址：
-
-```text
-plugin_manager action=install_bundle target=https://github.com/Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
 ```
 
 安装后需要**重启 Harness** 生效（宿主不会热加载新安装的 bundle）。
@@ -46,6 +52,7 @@ plugin_manager action=install_bundle target=https://github.com/Liang-Liao/dsh-cu
 ├── dsh-web-search-keenable/    # Keenable 提供方（搜索 + 抓取）
 ├── dsh-web-search-tinyfish/    # TinyFish 提供方（搜索 + 抓取）
 ├── LICENSE                     # MIT
+├── README.md                   # 本说明
 └── package.json                # 仅作仓库占位，不是 dsh bundle
 ```
 
@@ -57,7 +64,13 @@ plugin_manager action=install_bundle target=https://github.com/Liang-Liao/dsh-cu
 
 1. 编辑对应子目录下的文件；
 2. `git commit` 并 `git push` 到本仓库；
-3. 重新执行上面的安装命令即可更新（pnpm 会按 git 引用重新拉取；版本号有变更时最稳妥是先 `remove_bundle` 再安装）。
+3. 重新执行对应插件的安装命令即可更新（pnpm 会按 git 引用重新拉取最新提交，无需先卸载）：
+
+```powershell
+dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
+```
+
+更新后同样需要重启 Harness 生效。
 
 ## License
 
