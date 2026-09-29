@@ -1,0 +1,6 @@
+# Inserts the Keenable search provider. It registers with the `ctx.web` seam
+# exactly like `web-search-exa` does, so the web service resolves it when it is
+# the only usable search backend — or pin it with `searchProvider: keenable`.
+- insert:
+    - id: web-search-keenable
+      name: '@customize/dsh-web-search-keenable'

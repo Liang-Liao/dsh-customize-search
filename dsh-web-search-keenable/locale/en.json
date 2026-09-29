@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Keenable Web Search & Fetch",
+    "description": "Keenable-backed search and fetch providers for the ctx.web seam: keyed /v1/search and /v1/fetch, or the keyless public endpoints without a key."
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "dsh-customize-search",
+  "version": "0.0.0",
+  "private": true,
+  "description": "DeepSeek Harness web search and fetch plugins (Keenable and TinyFish providers), each installable individually from this repository",
+  "license": "MIT"
+}

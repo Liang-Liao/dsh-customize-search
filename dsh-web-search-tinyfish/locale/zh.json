@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TinyFish 网页搜索与抓取",
+    "description": "基于 TinyFish 的 ctx.web 搜索与抓取提供方：GET api.search.tinyfish.ai 与 POST api.fetch.tinyfish.ai，均通过 X-API-Key 认证。"
+  }
+}

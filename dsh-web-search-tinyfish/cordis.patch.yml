@@ -1,0 +1,7 @@
+# Inserts the TinyFish search and fetch providers. They register with the
+# `ctx.web` seam exactly like `web-search-exa` does, so the web service resolves
+# them when they are the only usable backends — or pin them with
+# `searchProvider: tinyfish` / `fetchProvider: tinyfish`.
+- insert:
+    - id: web-search-tinyfish
+      name: '@customize/dsh-web-search-tinyfish'

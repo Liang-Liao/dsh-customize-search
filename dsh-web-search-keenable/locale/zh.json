@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Keenable 网页搜索与抓取",
+    "description": "基于 Keenable 的 ctx.web 搜索与抓取提供方：带 API 密钥时走 /v1/search 与 /v1/fetch，无密钥时走公开端点。"
+  }
+}

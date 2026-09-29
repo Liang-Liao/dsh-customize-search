@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TinyFish Web Search & Fetch",
+    "description": "TinyFish-backed search and fetch providers for the ctx.web seam: GET api.search.tinyfish.ai and POST api.fetch.tinyfish.ai, both keyed with X-API-Key."
+  }
+}
