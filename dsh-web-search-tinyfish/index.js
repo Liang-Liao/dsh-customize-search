@@ -36,7 +36,7 @@ const TINYFISH_MAX_RECENCY_MINUTES = 5256000;
 /** TinyFish's accepted `page` upper bound (zero-based pagination). */
 const TINYFISH_MAX_PAGE = 10;
 /** Attribution header sent on every request. */
-const USER_AGENT = "dsh-web-search-tinyfish/1.0.1";
+const USER_AGENT = "dsh-web-search-tinyfish/1.0.2";
 /**
  * Return the first non-blank string among `values`, or `undefined`.
  *
