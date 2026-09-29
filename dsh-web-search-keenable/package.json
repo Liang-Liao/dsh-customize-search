@@ -1,7 +1,7 @@
 {
   "name": "@customize/dsh-web-search-keenable",
   "description": "Keenable-backed search and fetch providers for the DeepSeek Harness web capability seam (ctx.web)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "main": "index.js",
@@ -21,8 +21,8 @@
   "icon": "./icon.svg",
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-launch-environment": "0.2.0-rc.1",
-    "@deepseek-ai/dsh-web": "0.2.0-rc.1",
+    "@deepseek-ai/dsh-launch-environment": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-web": "0.2.0-rc.2",
     "@deepseek-ai/cordis": "~4.0.4"
   },
   "dependencies": {

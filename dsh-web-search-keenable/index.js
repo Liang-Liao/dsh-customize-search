@@ -41,7 +41,7 @@ const KEENABLE_MAX_SNIPPET_LENGTH = 10000;
 /** Keenable's accepted `max_results` upper bound; the seam still caps on return. */
 const KEENABLE_MAX_RESULTS = 50;
 /** Attribution header sent on every request. */
-const USER_AGENT = "dsh-web-search-keenable/1.0.0";
+const USER_AGENT = "dsh-web-search-keenable/1.0.1";
 /**
  * Return the first non-blank string among `values`, or `undefined`.
  *
