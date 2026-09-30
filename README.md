@@ -11,14 +11,20 @@
 
 ## 安装
 
-仓库里的两个插件**互相独立**，可以只装其中一个，也可以两个都装。安装命令（按需执行，也可两条都执行）：
+命令里的 `--profile <name>` 决定插件装进哪个 profile：`web`（Web GUI）或 `desktop`（桌面客户端）。**两个 profile 互相独立**（各有各的 manifest 和 lockfile），装了 web 不会自动装到 desktop，需要的话两边分别执行。
+
+仓库里的两个插件也**互相独立**，可以只装其中一个，也可以两个都装：
 
 ```powershell
-# 只装 Keenable
+# 只装 Keenable（web profile）
 dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
 
-# 只装 TinyFish
+# 只装 TinyFish（web profile）
 dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-tinyfish
+
+# desktop profile 同理，把 web 换成 desktop 即可
+dsh plugin --profile desktop add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-keenable
+dsh plugin --profile desktop add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-tinyfish
 ```
 
 `#path:` 后面的子目录决定安装哪一个插件；`github:用户名/仓库名` 也可以写成完整仓库地址 `https://github.com/Liang-Liao/dsh-customize-search`。
@@ -28,15 +34,18 @@ dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web
 插件以分支 spec 安装，升级即让 pnpm 重新解析到仓库 main 的最新提交：
 
 ```powershell
-# 更新单个插件
+# 更新单个插件（web profile）
 dsh plugin --profile web update @customize/dsh-web-search-keenable
 dsh plugin --profile web update @customize/dsh-web-search-tinyfish
 
 # 不带包名则一次更新全部
 dsh plugin --profile web update
+
+# desktop profile 同理
+dsh plugin --profile desktop update
 ```
 
-更新后的代码在**下次启动 Harness 时生效**。
+web 与 desktop 需要各自执行升级。更新后的代码在**下次启动 Harness 时生效**。
 
 > **不要用重跑 `add` 的方式升级**：spec 未变化时 pnpm 会跳过重新解析，升级请用 `update`。固定到历史版本、tag 安装等进阶用法见 [AGENTS.md](AGENTS.md)。
 

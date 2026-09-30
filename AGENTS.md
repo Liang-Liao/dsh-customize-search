@@ -25,6 +25,8 @@ dsh plugin --profile web update @customize/dsh-web-search-tinyfish
 
 不带包名的 `dsh plugin --profile web update` 会重解析全部依赖，两个插件可一次更新。更新后的代码在**下次启动 Harness 时生效**。
 
+示例以 web profile 为例；把 `--profile` 换成 `desktop` 即对桌面客户端的 profile 执行同样的操作。web 与 desktop 是两个独立 profile（各有各的 manifest 和 lockfile），插件要分别安装、分别更新。
+
 ## 固定版本 / 回退（commit 与 tag spec）
 
 需要把 profile 固定到某个提交或版本时，用带 commit / tag 的 spec 安装（pnpm 的多个参数用 `&` 连接，不要写两个 `#`；`&` 是 shell 保留字符，**整个 spec 要用引号包起来**，PowerShell 裸写会直接报语法错误）：
