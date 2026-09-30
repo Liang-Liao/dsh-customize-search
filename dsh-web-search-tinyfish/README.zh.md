@@ -1,25 +1,26 @@
+---
+description: "ctx.web 的 TinyFish 搜索与抓取提供方：如何安装并配置 TinyFish 网页搜索与 Chromium 渲染的 markdown 抓取，支持翻页、缓存新鲜度与逐 URL 错误上报。"
+kind: "package-reference"
+---
+
 # @customize/dsh-web-search-tinyfish
 
-基于 TinyFish 的搜索与抓取提供方，接入 DeepSeek Harness 的 web 能力
-（`ctx.web`），与 `@deepseek-ai/dsh-web-search-exa`、`@customize/dsh-web-search-keenable`
-结构一致。
+[English](README.md) | 中文
 
-- **搜索** — `GET https://api.search.tinyfish.ai`，返回带标题、摘要、URL 的
-  排序 JSON 结果，面向 LLM 消费优化。任意钱包余额免费（30 次/分钟）。
-- **抓取** — `POST https://api.fetch.tinyfish.ai`，用真实 Chromium 渲染页面后
-  返回干净的正文（markdown / HTML / JSON）。任意钱包余额免费（150 个 URL/分钟）。
+基于 TinyFish 的搜索与抓取提供方，接入 DeepSeek Harness 的 web 能力（`ctx.web`），与 `@deepseek-ai/dsh-web-search-exa`、`@customize/dsh-web-search-keenable` 结构一致。
 
-两次调用都需要 `X-API-Key` 请求头 —— TinyFish **没有免密钥的公开端点**（这点与
-Keenable 不同）。
+- **搜索** — `GET https://api.search.tinyfish.ai`，返回带标题、摘要、URL 的排序 JSON 结果，面向 LLM 消费优化。任意钱包余额免费（30 次/分钟）。
+- **抓取** — `POST https://api.fetch.tinyfish.ai`，用真实 Chromium 渲染页面后返回干净的正文（markdown / HTML / JSON）。任意钱包余额免费（150 个 URL/分钟）。
+
+两次调用都需要 `X-API-Key` 请求头 —— TinyFish **没有免密钥的公开端点**（这点与 Keenable 不同）。
 
 ## 安装
 
 ```powershell
-plugin_manager action=install_bundle target=E:\programData\dsh\project\dsh-web-search-tinyfish
+dsh plugin --profile web add github:Liang-Liao/dsh-customize-search#path:dsh-web-search-tinyfish
 ```
 
-bundle 会插入 `web-search-tinyfish` 插件行。安装后在 profile 的
-`cordis.patch.yml` 中固定使用：
+bundle 会插入 `web-search-tinyfish` 插件行。安装后在 profile 的 `cordis.patch.yml` 中固定使用：
 
 ```yaml
 - id: web
@@ -32,9 +33,7 @@ bundle 会插入 `web-search-tinyfish` 插件行。安装后在 profile 的
 
 ## 配置
 
-在 <https://agent.tinyfish.ai/api-keys> 创建密钥，填入插件配置的
-`apiKey` 字段，或设置 `TINYFISH_API_KEY` 环境变量（经 launch-environment
-分层读取：进程环境变量、项目 `.env`、`$DSH_HOME/.env`）。
+在 <https://agent.tinyfish.ai/api-keys> 创建密钥，填入插件配置的 `apiKey` 字段，或设置 `TINYFISH_API_KEY` 环境变量（经 launch-environment 分层读取：进程环境变量、项目 `.env`、`$DSH_HOME/.env`）。
 
 | 字段 | 默认值 | 说明 |
 | --- | --- | --- |
@@ -59,19 +58,11 @@ bundle 会插入 `web-search-tinyfish` 插件行。安装后在 profile 的
 
 ## 行为说明
 
-- 搜索请求里的 `maxResults` **不是** TinyFish 的参数：单次响应页大小由服务端
-  决定，因此提供方原样透传，由 seam 截断 `sources[]` 并设置 `truncated`。
-  需要翻页时调大 `page`。
-- 抓取成功时映射为 `statusCode: 200`，因为 TinyFish 响应不携带原始站点状态码。
-  单 URL 失败（404、反爬拦截、超时）会出现在 HTTP 200 旁边的 `errors[]` 里，
-  以 `WebError` 抛出，代码为 `WEB_PROVIDER_ERROR`（`invalid_url` /
-  `invalid_redirect_url` 为 `WEB_INVALID_URL`）。
-- `format: "html"` 解码为 `html` 类型的 body；`markdown` 与 `json`
-  （字符串化文档树）解码为 `text` 类型。
-- 私网 IP、localhost、云元数据端点由 TinyFish 侧拒绝（单 URL `invalid_url`），
-  与本地抓取器的策略一致。
-- 提供方不跟随重定向（`redirect: "error"`）；TinyFish 在浏览器侧跟随，并通过
-  `final_url` 返回最终地址。
+- 搜索请求里的 `maxResults` **不是** TinyFish 的参数：单次响应页大小由服务端决定，因此提供方原样透传，由 seam 截断 `sources[]` 并设置 `truncated`。需要翻页时调大 `page`。
+- 抓取成功时映射为 `statusCode: 200`，因为 TinyFish 响应不携带原始站点状态码。单 URL 失败（404、反爬拦截、超时）会出现在 HTTP 200 旁边的 `errors[]` 里，以 `WebError` 抛出，代码为 `WEB_PROVIDER_ERROR`（`invalid_url` / `invalid_redirect_url` 为 `WEB_INVALID_URL`）。
+- `format: "html"` 解码为 `html` 类型的 body；`markdown` 与 `json`（字符串化文档树）解码为 `text` 类型。
+- 私网 IP、localhost、云元数据端点由 TinyFish 侧拒绝（单 URL `invalid_url`），与本地抓取器的策略一致。
+- 提供方不跟随重定向（`redirect: "error"`）；TinyFish 在浏览器侧跟随，并通过 `final_url` 返回最终地址。
 
 ## 限制
 
